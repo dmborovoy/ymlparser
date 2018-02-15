@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="01" author="dxboro">
+        <createTable tableName="model" remarks="model table">
+            <column name="model_id" type="varchar">
+                <constraints nullable="false" unique="true" primaryKey="true"/>
+            </column>
+            <column name="picture" type="varchar">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column name="description" type="varchar">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="variation" remarks="variation table">
+            <column name="variation_id" type="varchar">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="model_id" type="varchar">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+
+        <createTable tableName="attributes" remarks="attributes table">
+            <column name="attribute_id" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar">
+                <constraints nullable="true"/>
+            </column>
+            <column name="value" type="varchar">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="variation" baseColumnNames="model_id"
+                                 constraintName="model_fk"
+                                 referencedTableName="model" referencedColumnNames="model_id"/>
+
+        <addForeignKeyConstraint baseTableName="attributes" baseColumnNames="attribute_id"
+                                 constraintName="variation_fk"
+                                 referencedTableName="variation" referencedColumnNames="variation_id"/>
+    </changeSet>
+</databaseChangeLog>
