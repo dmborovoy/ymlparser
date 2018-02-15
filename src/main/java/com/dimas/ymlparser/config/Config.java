@@ -2,6 +2,7 @@ package com.dimas.ymlparser.config;
 
 import com.dimas.ymlparser.model.Model;
 import com.dimas.ymlparser.model.Offer;
+import com.dimas.ymlparser.service.YmlListener;
 import com.dimas.ymlparser.service.YmlReader;
 import com.dimas.ymlparser.service.YmlWriter;
 import org.springframework.batch.core.Job;
@@ -27,9 +28,7 @@ import javax.persistence.EntityManager;
 @Configuration
 @EnableBatchProcessing
 @ComponentScan
-//spring boot configuration
 @EnableAutoConfiguration
-// file that contains the properties
 @PropertySource("classpath:application.properties")
 public class Config {
 
@@ -42,6 +41,9 @@ public class Config {
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
 
+    @Autowired
+    YmlListener ymlListener;
+
 
     @Bean
     public Job job() {
@@ -49,6 +51,7 @@ public class Config {
                 .incrementer(new RunIdIncrementer())
                 .flow(step1())
                 .end()
+                .listener(ymlListener)
                 .build();
     }
 

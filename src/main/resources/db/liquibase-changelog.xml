@@ -20,8 +20,11 @@
         </createTable>
 
         <createTable tableName="variation" remarks="variation table">
-            <column name="variation_id" type="varchar">
+            <column name="id" type="int" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="variation_id" type="varchar">
+                <constraints nullable="false"/>
             </column>
             <column name="model_id" type="varchar">
                 <constraints nullable="true"/>
@@ -47,6 +50,6 @@
 
         <addForeignKeyConstraint baseTableName="attributes" baseColumnNames="attribute_id"
                                  constraintName="variation_fk"
-                                 referencedTableName="variation" referencedColumnNames="variation_id"/>
+                                 referencedTableName="variation" referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>

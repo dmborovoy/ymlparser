@@ -15,6 +15,10 @@ import java.util.Map;
 public class Variation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private String id;
+
     @Column(name = "variation_id")
     private String variationId;
 
@@ -23,15 +27,17 @@ public class Variation {
     private Model model;
 
     @ElementCollection
-    @MapKeyColumn(name="name")
-    @Column(name="value")
-    @CollectionTable(name="attributes", joinColumns=@JoinColumn(name="attribute_id"))
+    @MapKeyColumn(name = "name")
+    @Column(name = "value")
+    @CollectionTable(name = "attributes", joinColumns = @JoinColumn(name = "attribute_id"))
     private Map<String, String> params = new HashMap<>();
 
     @Override
     public String toString() {
         return "Variation{" +
-                "variationId='" + variationId + '\'' +
+                "id='" + id + '\'' +
+                ", model_id='" + (model == null ? "" : model.getId()) + '\'' +
+                ", variationId='" + variationId + '\'' +
                 ", params=" + params +
                 '}';
     }
